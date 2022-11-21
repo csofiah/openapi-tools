@@ -1,0 +1,285 @@
+openapi: 3.0.3
+info:
+  title: Geographic API
+  version: v1.0
+  description: API for geographical units management.
+servers:
+- url: http://localhost:9090
+  description: Local server
+paths:
+  /communities:
+    get:
+      tags:
+      - communities
+      operationId: findCommunities
+      parameters:
+      - name: name
+        in: query
+        required: false
+        schema:
+          type: string
+        example: "CAM"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Community'
+              examples:
+                communitiesExample:
+                  $ref: '#/components/examples/sampleCommunities'
+  /communities/{communityId}:
+    get:
+      tags:
+      - communities
+      operationId: findCommunityById
+      parameters:
+      - name: communityId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: "CAM"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedCommunity'
+    put:
+      tags:
+      - communities
+      operationId: createOrReplaceCommunity
+      parameters:
+      - name: communityId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: "CAM"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtendedCommunity'
+            examples:
+              extendedCommunityExample:
+                $ref: '#/components/examples/sampleExtendedCommunity'
+        required: true
+      responses:
+        "200":
+          description: Replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedCommunity'
+              examples:
+                extendedCommunityExample:
+                  $ref: '#/components/examples/sampleExtendedCommunity'
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedCommunity'
+              examples:
+                extendedCommunityExample:
+                  $ref: '#/components/examples/sampleExtendedCommunity'
+    delete:
+      tags:
+      - communities
+      operationId: deleteCommunity
+      parameters:
+      - name: communityId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: "CAM"
+      responses:
+        "204":
+          description: OK
+  /provinces:
+    get:
+      tags:
+      - provinces
+      operationId: findProvinces
+      parameters:
+      - name: name
+        in: query
+        required: false
+        schema:
+          type: string
+        example: "28"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Province'
+              examples:
+                provincesExample:
+                  $ref: '#/components/examples/sampleProvinces'
+  /provinces/{provinceId}:
+    get:
+      tags:
+      - provinces
+      operationId: findProvinceById
+      parameters:
+      - name: provinceId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: "28"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedProvince'
+    put:
+      tags:
+      - provinces
+      operationId: createOrReplaceProvince
+      parameters:
+      - name: provinceId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: "28"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtendedProvince'
+            examples:
+              extendedProvinceExample:
+                $ref: '#/components/examples/sampleExtendedProvince'
+        required: true
+      responses:
+        "200":
+          description: Replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedProvince'
+              examples:
+                extendedProvinceExample:
+                  $ref: '#/components/examples/sampleExtendedProvince'
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedProvince'
+              examples:
+                extendedProvinceExample:
+                  $ref: '#/components/examples/sampleExtendedProvince'
+    delete:
+      tags:
+      - provinces
+      operationId: deleteProvince
+      parameters:
+      - name: provinceId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: "28"
+      responses:
+        "204":
+          description: OK
+components:
+  schemas:
+    Community:
+      required:
+      - communityId
+      - name
+      type: object
+      properties:
+        communityId:
+          type: string
+          minLength: 1
+          maxLength: 3
+          example: "CAM"
+        name:
+          type: string
+          example: "C. Madrid"
+    ExtendedCommunity:
+      allOf:
+      - $ref: '#/components/schemas/Community'
+      - type: object
+      properties:
+        longName:
+          type: string
+          example: "Comunidad Autónoma de Madrid"
+        provinceIds:
+          type: array
+          items:
+            type: string
+          example: [ "28", "05", "40" ]
+        provinces:
+          type: array
+          items:
+            $ref: '#/components/schemas/Province'
+    Province:
+      required:
+      - provinceId
+      - name
+      type: object
+      properties:
+        provinceId:
+          type: string
+          minLength: 1
+          maxLength: 2
+          example: "28"
+        name:
+          type: string
+          example: "Madrid"
+    ExtendedProvince:
+      required:
+      - communityId
+      allOf:
+      - $ref: '#/components/schemas/Province'
+      - type: object
+      properties:
+        longName:
+          type: string
+          example: "Madrid"
+        communityId:
+          type: string
+          example: "CAM"
+  examples:
+    sampleCommunities:
+      value:
+        - communityId: "CFN"
+          name: "C.F. Navarra"
+        - communityId: "RDM"
+          name: "R. Murcia"
+    sampleExtendedCommunity:
+      value:
+        communityId: "CYL"
+        name: "Cast. León"
+        longName: "Castilla y León"
+    sampleProvinces:
+      value:
+        - provinceId: "42"
+          name: "Soria"
+        - provinceId: "49"
+          name: "Zamora"
+    sampleExtendedProvince:
+      value:
+        provinceId: "24"
+        name: "León"
+        longName: "León"
+        communityId: "CYL"

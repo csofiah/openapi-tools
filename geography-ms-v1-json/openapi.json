@@ -1,0 +1,425 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "description" : "API for geographical units management.",
+    "title" : "Geographic API",
+    "version" : "v1.0"
+  },
+  "servers" : [ {
+    "description" : "Local server",
+    "url" : "http://localhost:9090"
+  } ],
+  "paths" : {
+    "/communities" : {
+      "get" : {
+        "operationId" : "findCommunities",
+        "parameters" : [ {
+          "example" : "CAM",
+          "explode" : true,
+          "in" : "query",
+          "name" : "name",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "communitiesExample" : {
+                    "$ref" : "#/components/examples/sampleCommunities"
+                  }
+                },
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Community"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "communities" ]
+      }
+    },
+    "/communities/{communityId}" : {
+      "delete" : {
+        "operationId" : "deleteCommunity",
+        "parameters" : [ {
+          "example" : "CAM",
+          "explode" : false,
+          "in" : "path",
+          "name" : "communityId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "communities" ]
+      },
+      "get" : {
+        "operationId" : "findCommunityById",
+        "parameters" : [ {
+          "example" : "CAM",
+          "explode" : false,
+          "in" : "path",
+          "name" : "communityId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExtendedCommunity"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "communities" ]
+      },
+      "put" : {
+        "operationId" : "createOrReplaceCommunity",
+        "parameters" : [ {
+          "example" : "CAM",
+          "explode" : false,
+          "in" : "path",
+          "name" : "communityId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "examples" : {
+                "extendedCommunityExample" : {
+                  "$ref" : "#/components/examples/sampleExtendedCommunity"
+                }
+              },
+              "schema" : {
+                "$ref" : "#/components/schemas/ExtendedCommunity"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "extendedCommunityExample" : {
+                    "$ref" : "#/components/examples/sampleExtendedCommunity"
+                  }
+                },
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExtendedCommunity"
+                }
+              }
+            },
+            "description" : "Replaced"
+          },
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "extendedCommunityExample" : {
+                    "$ref" : "#/components/examples/sampleExtendedCommunity"
+                  }
+                },
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExtendedCommunity"
+                }
+              }
+            },
+            "description" : "Created"
+          }
+        },
+        "tags" : [ "communities" ]
+      }
+    },
+    "/provinces" : {
+      "get" : {
+        "operationId" : "findProvinces",
+        "parameters" : [ {
+          "example" : "28",
+          "explode" : true,
+          "in" : "query",
+          "name" : "name",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "provincesExample" : {
+                    "$ref" : "#/components/examples/sampleProvinces"
+                  }
+                },
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Province"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "provinces" ]
+      }
+    },
+    "/provinces/{provinceId}" : {
+      "delete" : {
+        "operationId" : "deleteProvince",
+        "parameters" : [ {
+          "example" : "28",
+          "explode" : false,
+          "in" : "path",
+          "name" : "provinceId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "provinces" ]
+      },
+      "get" : {
+        "operationId" : "findProvinceById",
+        "parameters" : [ {
+          "example" : "28",
+          "explode" : false,
+          "in" : "path",
+          "name" : "provinceId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExtendedProvince"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "provinces" ]
+      },
+      "put" : {
+        "operationId" : "createOrReplaceProvince",
+        "parameters" : [ {
+          "example" : "28",
+          "explode" : false,
+          "in" : "path",
+          "name" : "provinceId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "examples" : {
+                "extendedProvinceExample" : {
+                  "$ref" : "#/components/examples/sampleExtendedProvince"
+                }
+              },
+              "schema" : {
+                "$ref" : "#/components/schemas/ExtendedProvince"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "extendedProvinceExample" : {
+                    "$ref" : "#/components/examples/sampleExtendedProvince"
+                  }
+                },
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExtendedProvince"
+                }
+              }
+            },
+            "description" : "Replaced"
+          },
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "extendedProvinceExample" : {
+                    "$ref" : "#/components/examples/sampleExtendedProvince"
+                  }
+                },
+                "schema" : {
+                  "$ref" : "#/components/schemas/ExtendedProvince"
+                }
+              }
+            },
+            "description" : "Created"
+          }
+        },
+        "tags" : [ "provinces" ]
+      }
+    }
+  },
+  "components" : {
+    "examples" : {
+      "sampleCommunities" : {
+        "value" : [ {
+          "communityId" : "CFN",
+          "name" : "C.F. Navarra"
+        }, {
+          "communityId" : "RDM",
+          "name" : "R. Murcia"
+        } ]
+      },
+      "sampleExtendedCommunity" : {
+        "value" : {
+          "communityId" : "CYL",
+          "name" : "Cast. León",
+          "longName" : "Castilla y León"
+        }
+      },
+      "sampleProvinces" : {
+        "value" : [ {
+          "provinceId" : "42",
+          "name" : "Soria"
+        }, {
+          "provinceId" : "49",
+          "name" : "Zamora"
+        } ]
+      },
+      "sampleExtendedProvince" : {
+        "value" : {
+          "provinceId" : "24",
+          "name" : "León",
+          "longName" : "León",
+          "communityId" : "CYL"
+        }
+      }
+    },
+    "schemas" : {
+      "Community" : {
+        "properties" : {
+          "communityId" : {
+            "example" : "CAM",
+            "maxLength" : 3,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "C. Madrid",
+            "type" : "string"
+          }
+        },
+        "required" : [ "communityId", "name" ],
+        "type" : "object"
+      },
+      "ExtendedCommunity" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Community"
+        }, {
+          "type" : "object"
+        } ],
+        "properties" : {
+          "longName" : {
+            "example" : "Comunidad Autónoma de Madrid",
+            "type" : "string"
+          },
+          "provinceIds" : {
+            "example" : [ "28", "05", "40" ],
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "provinces" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Province"
+            },
+            "type" : "array"
+          }
+        }
+      },
+      "Province" : {
+        "properties" : {
+          "provinceId" : {
+            "example" : "28",
+            "maxLength" : 2,
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "Madrid",
+            "type" : "string"
+          }
+        },
+        "required" : [ "name", "provinceId" ],
+        "type" : "object"
+      },
+      "ExtendedProvince" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Province"
+        }, {
+          "type" : "object"
+        } ],
+        "properties" : {
+          "longName" : {
+            "example" : "Madrid",
+            "type" : "string"
+          },
+          "communityId" : {
+            "example" : "CAM",
+            "type" : "string"
+          }
+        },
+        "required" : [ "communityId" ]
+      }
+    }
+  }
+}
